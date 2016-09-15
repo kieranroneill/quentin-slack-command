@@ -13,4 +13,3 @@ npm prune && npm update
 echo 'Restarting app in production mode...'
 
 NODE_ENV=production pm2 restart server.js
-
