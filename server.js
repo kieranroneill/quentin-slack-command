@@ -52,6 +52,7 @@ app.post('/quentin', (request, response, next) => {
     }
 
     response.json({
+        response_type: 'in_channel',
         attachments: [
             {
                 title: quentinItem.caption,
