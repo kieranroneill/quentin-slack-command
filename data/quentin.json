@@ -1,0 +1,62 @@
+[
+  {
+    "type": "local",
+    "caption": "If you lick me, that would be great",
+    "imageUrl": "boss_quentin.jpg"
+  },
+  {
+    "type": "local",
+    "caption": "Don't look directly at it!",
+    "imageUrl": "crazy_quentin.gif"
+  },
+  {
+    "type": "local",
+    "caption": "One of those days",
+    "imageUrl": "dumb_quentin.jpg"
+  },
+  {
+    "type": "local",
+    "caption": "It wasn't me",
+    "imageUrl": "guilty_quentin.jpg"
+  },
+  {
+    "type": "local",
+    "caption": "Change?",
+    "imageUrl": "homeless_quentin.jpg"
+  },
+  {
+    "type": "local",
+    "caption": "Turning Japanese-y",
+    "imageUrl": "katsu_quentin.jpg"
+  },
+  {
+    "type": "local",
+    "caption": "Looks great, Darling",
+    "imageUrl": "quentin_new_jacket.gif"
+  },
+  {
+    "type": "local",
+    "caption": "F*ck you and f*ck your world",
+    "imageUrl": "rude_quentin.jpg"
+  },
+  {
+    "type": "local",
+    "caption": "I touch myself because I love myself",
+    "imageUrl": "touch-feely_quentin.jpg"
+  },
+  {
+    "type": "local",
+    "caption": "lawl",
+    "imageUrl": "trolled.jpg"
+  },
+  {
+    "type": "local",
+    "caption": "Working for the man",
+    "imageUrl": "working_bunny_quentin.jpg"
+  },
+  {
+    "type": "external",
+    "caption": "Quentin's favourite Giphy",
+    "imageUrl": "http://media.giphy.com/media/I4uobfeht6xNu/giphy-tumblr.gif"
+  }
+]
