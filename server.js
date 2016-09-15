@@ -54,7 +54,7 @@ app.post('/quentin', (request, response, next) => {
     response.json({
         attachments: [
             {
-                title: quentinItem.caption
+                title: quentinItem.caption,
                 image_url: quentinItem.imageUrl
             }
         ]
