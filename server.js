@@ -8,6 +8,8 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 
+const Errors = require('./config/errors.json');
+
 const PORT = 1337;
 
 const app = express();
@@ -38,27 +40,29 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 //====================================================
 
 app.post('/quentin', (request, response, next) => {
-    let quentinItem;
+    let item;
 
     if(request.body.token !== process.env.SLACK_TOKEN) {
-        return response.status(401).send('Yeah...no, you\'re not allowed to access this');
+        return response
+            .status(401)
+            .send(Errors.INVALID_SLACK_TOKEN);
     }
 
-    quentinItem = quentinArray[Math.floor(Math.random() * quentinArray.length)]; // Get random item.
+    item = quentinArray[Math.floor(Math.random() * quentinArray.length)]; // Get random item.
 
     // Update local images with the hostname.
-    if(quentinItem.type === 'local') {
-        quentinItem.imageUrl = request.protocol + '://' + request.headers.host + '/images/' + quentinItem.imageUrl;
+    if(item.type === 'local') {
+        item.imageUrl = request.protocol + '://' + request.headers.host + '/images/' + item.imageUrl;
     }
 
     response.json({
         response_type: 'in_channel',
-        attachments: [{ title: quentinItem.caption, image_url: quentinItem.imageUrl }]
+        attachments: [{ title: item.caption, image_url: item.imageUrl }]
     });
 });
 
 app.use('/', (request, response) => {
-    response.status(404).send('Misdirection!!');
+    response.status(404).send(Errors.UNKNOWN_ROUTE);
 });
 
 //====================================================
