@@ -8,6 +8,9 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 
+const QuentinResponse = require('./models/index').QuentinResponse;
+
+const config = require('./config/default.json');
 const Errors = require('./config/errors.json');
 
 const PORT = 1337;
@@ -16,6 +19,20 @@ const app = express();
 const isDevelopment = (process.env.NODE_ENV === 'development');
 
 const quentinArray = require('./data/quentin.json');
+
+const getItem = (text) => {
+    const sanitisedText = text.toLowerCase();
+
+    if(sanitisedText.includes('pirate')) {
+        return new QuentinResponse(
+            config.RESPONSE_TYPE.LOCAL,
+            'Arrrrgh!!',
+            'pirate_quentin.jpg'
+        );
+    }
+
+    return quentinArray[Math.floor(Math.random() * quentinArray.length)]; // Default to random item.
+};
 
 //====================================================
 // Configuration.
@@ -48,10 +65,10 @@ app.post('/quentin', (request, response, next) => {
             .send(Errors.INVALID_SLACK_TOKEN);
     }
 
-    item = quentinArray[Math.floor(Math.random() * quentinArray.length)]; // Get random item.
+    item = getItem(request.body.text);
 
     // Update local images with the hostname.
-    if(item.type === 'local') {
+    if(item.type === config.RESPONSE_TYPE.LOCAL) {
         item.imageUrl = request.protocol + '://' + request.headers.host + '/images/' + item.imageUrl;
     }
 

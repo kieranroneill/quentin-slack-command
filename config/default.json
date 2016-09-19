@@ -1,0 +1,6 @@
+{
+  "RESPONSE_TYPE": {
+    "LOCAL": "local",
+    "EXTERNAL": "external"
+  }
+}
