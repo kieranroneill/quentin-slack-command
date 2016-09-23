@@ -8,31 +8,11 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 
-const QuentinResponse = require('./models/index').QuentinResponse;
-
-const config = require('./config/default.json');
-const Errors = require('./config/errors.json');
+const Router = require('./routes/router');
 
 const PORT = 1337;
 
 const app = express();
-const isDevelopment = (process.env.NODE_ENV === 'development');
-
-const quentinArray = require('./data/quentin.json');
-
-const getItem = (text) => {
-    const sanitisedText = text.toLowerCase();
-
-    if(sanitisedText.includes('pirate')) {
-        return new QuentinResponse(
-            config.RESPONSE_TYPE.LOCAL,
-            'Arrrrgh!!',
-            'pirate_quentin.jpg'
-        );
-    }
-
-    return quentinArray[Math.floor(Math.random() * quentinArray.length)]; // Default to random item.
-};
 
 //====================================================
 // Configuration.
@@ -56,30 +36,20 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 // Routes.
 //====================================================
 
-app.post('/quentin', (request, response, next) => {
-    let item;
+const router = new Router(auth);
 
-    if(request.body.token !== process.env.SLACK_TOKEN) {
-        return response
-            .status(401)
-            .send(Errors.INVALID_SLACK_TOKEN);
+app.use('/', router.router);
+
+//====================================================
+// Error handling.
+//====================================================
+
+app.use(function(error, request, response, next) {
+    if(error) {
+        return response.status(error.status || 500).json({ error: error.error });
     }
 
-    item = getItem(request.body.text);
-
-    // Update local images with the hostname.
-    if(item.type === config.RESPONSE_TYPE.LOCAL) {
-        item.imageUrl = request.protocol + '://' + request.headers.host + '/images/' + item.imageUrl;
-    }
-
-    response.json({
-        response_type: 'in_channel',
-        attachments: [{ title: item.caption, image_url: item.imageUrl }]
-    });
-});
-
-app.use('/', (request, response) => {
-    response.status(404).send(Errors.UNKNOWN_ROUTE);
+    next();
 });
 
 //====================================================

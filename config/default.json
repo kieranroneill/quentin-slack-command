@@ -1,4 +1,9 @@
 {
+  "ENDPOINTS": {
+    "QUENTIN": "/quentin",
+    "TROLLED": "/trolled"
+  },
+
   "RESPONSE_TYPE": {
     "LOCAL": "local",
     "EXTERNAL": "external"
